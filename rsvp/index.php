@@ -13,7 +13,8 @@ $jsTimeStamp = '?version=v-'.$timeStr;
 <link rel="icon" href="../../../../favicon.ico">
 <title>Info   </title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-<link href="css/style.css<?php echo $jsTimeStamp ?>" rel="stylesheet">
+
+
 </head>
 
 <body ng-app="menuApp"  ng-controller="menuCtrl">
@@ -38,26 +39,50 @@ $jsTimeStamp = '?version=v-'.$timeStr;
 
 <div class="container">
 
+
+
+<!-- Modal -->
+<div ng-if="_mode == 'CHECK' " >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">User Validation</h5>
+
+
+      </div>
+      <div class="modal-body">
+        <p>Please type your email address that you used for RSVP</p>
+        <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+        <input ng-model="pinObj.val"  class="form-control" placeholder="james@gmail.com">
+        </div>
+        </div>
+        <p ng-if="$scope._error_msg  != '' " ><font color=red>{{_error_msg}}</font></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" ng-click="goToPage('LIST')">CANCEL</button>
+        <button type="button" class="btn btn-primary" ng-click="selectRec()">CONFIRM </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 <div ng-if="_mode == 'LIST' "class="table-responsive">
 
-  <div class="jumbotron">
-  <div class="container">
-
+  <div >
   <ul>
   <li>7:00pm, 1/18/2018</li>
   <li>장소: 수라식당 2층</li>
   </ul>
-
-
   <p>
-
-  <button type="button" class="btn btn-primary" ng-click="goToPage('NEW')">+ Click RSVP</button>
+  <button type="button" class="btn btn-primary" ng-click="goToPage('NEW')">+ Add New Member</button>
   <button type="button" class="btn btn-success" ng-click="goToPage('MAIN')">Back To Main</button>
-
   </p>
 
-
-  </div>
   </div>
 
 
@@ -65,75 +90,127 @@ $jsTimeStamp = '?version=v-'.$timeStr;
   <thead>
   <tr>
   <th>#1</th>
-  <th>Name</th>
-  <th>Menu</th>
+  <th>Person</th>
+  <th>Attend(1/18)/Menu</th>
+
   </thead>
   <tbody>
   <tr ng-repeat="x in _users " >
   <td>{{$index+1}}</td>
-  <td>{{x.name}} </td>
-  <td>{{x.food}} </td>
+
+  <td>{{x.c1}}/{{x.c2}}/{{x.c6}} </td>
+  <td>{{x.c9}}/{{x.c7}}</td>
+  
+
+
+
+  <td> <button type="button" class="btn btn-primary" ng-click="checkRec(x)">Modify</button> </td>
   </tr>
   </tbody>
   </table>
+
+
+
+
+
 </div>
 
 
 
 
 
-<div ng-if="_mode == 'NEW' "class="table-responsive">
+<div ng-if="_mode == 'NEW' || _mode == 'MOD'  " class="table-responsive">
 
 기본정보와 메뉴를 선택해주신후 저장!(1/8 Open)
   <p>
-<button type="button" class="btn btn-primary" ng-click="goToPage('NEW')">+ SAVE</button>
+  <button ng-if=" _mode == 'MOD'  "  type="button" class="btn btn-primary" ng-click="updateRec(x)">Save(Update)</button>
+  <button ng-if=" _mode == 'NEW'  "  type="button" class="btn btn-primary" ng-click="addRec()">+ Save(New)</button>
   <button type="button" class="btn btn-success" ng-click="goToPage('LIST')">CANCEL</button>
 
   </p>
 
   <form>
-    <div class="form-group">
-      <label for="exampleFormControlInput1">Name</label>
-      <input type="email" class="form-control" id="exampleFormControlInput1" required placeholder="홍길동/Jame Hong">
-    </div>
-    <div class="form-group">
-      <label for="exampleFormControlInput1">Phone</label>
-      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="111-111-1111">
-    </div>
-    <div class="form-group">
-      <label for="exampleFormControlInput1">Email address</label>
-      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="example@google.com">
-    </div>
-    <div class="form-group">
-      <label for="exampleFormControlInput1">Work</label>
-      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Project">
-    </div>
-    <div class="form-group">
-      <label for="exampleFormControlSelect2">Level</label>
-      <select  class="form-control" id="exampleFormControlSelect2">
-        <option>Sr.Developer</option>
-        <option>Mid.Developer</option>
-        <option>Jr.Developer</option>
-        <option>Student</option>
+
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Attend(1/18)</label>
+    <div class="col-sm-10">
+      <select  ng-model="selObj.c9"  class="form-control" id="exampleFormControlSelect2">
+        <option value="YES">Yes, I will go.</option>
+        <option value="NO">No I am not be able to attend.</option>
+        <option value="TBD">Not sure yet</option>
       </select>
     </div>
+  </div>
 
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Name(KOR)</label>
+    <div class="col-sm-10">
+      <input type="text" ng-model="selObj.c1"  class="form-control" placeholder="홍길동">
+    </div>
+  </div>
 
-    <div class="form-group">
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Name(ENG)</label>
+    <div class="col-sm-10">
+      <input type="text" ng-model="selObj.c2"  class="form-control" placeholder="Jame Hong">
+    </div>
+  </div>
 
+   <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Phone</label>
+    <div class="col-sm-10">
+      <input type="text" ng-model="selObj.c3"  class="form-control" placeholder="972-111-1111">
+    </div>
+  </div>
 
-      <label for="exampleFormControlSelect2">Select Menu </label>
-        <select class="form-control" id="exampleFormControlSelect2">
-        <option>불고기</option>
-        <option>돌솥비빔밥</option>
-        <option>해물순두부</option>
-        <option>육계장</option>
-        <option>알탕</option>
-        <option>대구매운탕</option>
+   <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" ng-model="selObj.c4"  class="form-control" placeholder="example@google.com">
+    </div>
+  </div>
 
+   <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Work</label>
+    <div class="col-sm-10">
+      <input type="text" ng-model="selObj.c5"  class="form-control" placeholder="Company or Project">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Level</label>
+    <div class="col-sm-10">
+      <select  ng-model="selObj.c6"  class="form-control" id="exampleFormControlSelect2">
+        <option value="SR">Sr.Developer</option>
+        <option value="MD">Mid.Developer</option>
+        <option value="JR">Jr.Developer</option>
+        <option value="ST">Student</option>
       </select>
     </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Menu</label>
+    <div class="col-sm-10">
+      <select  ng-model="selObj.c7"  class="form-control" id="exampleFormControlSelect2">
+        <option >불고기</option>
+        <option >돌솥비빔밥</option>
+        <option >해물순두부</option>
+        <option >육계장</option>
+        <option >알탕</option>
+        <option >대구매운탕</option>
+      </select>
+    </div>
+  </div>
+
+
   </form>
+
+
+
+
+
 
 
 </div>
