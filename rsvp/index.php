@@ -11,7 +11,7 @@ $jsTimeStamp = '?version=v-'.$timeStr;
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="../../../../favicon.ico">
-<title>Info   </title>
+<title>Korean Developer Community@DFW   </title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
 
@@ -73,7 +73,9 @@ $jsTimeStamp = '?version=v-'.$timeStr;
 
 <div ng-if="_mode == 'LIST' "class="table-responsive">
 
-  <div >
+  <div>
+    <p>1/18 일 모임 RSVP 부탁드립니다.</p>
+  
   <ul>
   <li>7:00pm, 1/18/2018</li>
   <li>장소: 수라식당 2층</li>
@@ -90,16 +92,16 @@ $jsTimeStamp = '?version=v-'.$timeStr;
   <thead>
   <tr>
   <th>#1</th>
-  <th>Person</th>
-  <th>Attend(1/18)/Menu</th>
-
+  <th width=50%>Person</th>
+  <th width=30%>Attend(1/18)</th>
+  <th>Modify</th>
   </thead>
   <tbody>
   <tr ng-repeat="x in _users " >
   <td>{{$index+1}}</td>
 
-  <td>{{x.c1}}/{{x.c2}}/{{x.c6}} </td>
-  <td>{{x.c9}}/{{x.c7}}</td>
+  <td>{{x.c1}}<br>{{x.c2}}<br>{{x.c6}} </td>
+  <td>{{x.c9}}<br>{{x.c7}}</td>
   
 
 

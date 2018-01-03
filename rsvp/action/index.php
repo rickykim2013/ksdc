@@ -30,5 +30,23 @@ if ( $mode_type == "LIST"){
 }else{
 	include 'inc_db_mod.php';
 }
+/*
 
+CREATE TABLE `sw_member` (
+  `c_id` int(11) NOT NULL AUTO_INCREMENT,
+  `c1` varchar(45) DEFAULT NULL,
+  `c2` varchar(45) DEFAULT NULL,
+  `c3` varchar(45) DEFAULT NULL,
+  `c4` varchar(45) DEFAULT NULL,
+  `c5` varchar(45) DEFAULT NULL,
+  `c6` varchar(45) DEFAULT NULL,
+  `c7` varchar(45) DEFAULT NULL,
+  `c8` varchar(45) DEFAULT NULL,
+  `c9` varchar(45) DEFAULT NULL,
+  `c10` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`c_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+SELECT * FROM kfood.sw_member;
+
+*/
 ?>
